@@ -122,5 +122,16 @@ class Arena{
         this.ctx.beginPath()
         this.ctx.font = '20px serif'
         this.ctx.fillText("💥",x+14,y+35)
-    }
+   }
+
+   drawPlayerDeath(){
+    this.ctx.fillStyle = "black"
+    this.ctx.rect(100,100,300,300)
+    this.ctx.fill()
+    this.ctx.beginPath()
+    this.ctx.font = '70px serif'
+    this.ctx.fillStyle = "white"
+    this.ctx.fillText("Game",160,220)
+    this.ctx.fillText("Over",170,320)
+   }
 }

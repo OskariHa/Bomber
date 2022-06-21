@@ -4,12 +4,18 @@ gCanvas.height = 500
 gCanvas.width = 500
 
 const ctx = gCanvas.getContext("2d")
+
+var myReq
 const arena = new Arena(ctx)
 this.controls = new Controls()
 
 
+function death(){
+    arena.drawPlayerDeath()
+    cancelAnimationFrame(myReq)
+}
 "0=empty, 1=wall, 2=breakable, 3=bomb, 4=bob, 5=player"
-let newGrid = [[5, 0, 0, 0, 2, 3, 0, 0, 0],
+const grid1 = [[5, 0, 0, 0, 2, 3, 0, 0, 0],
 [0, 1, 0, 1, 2, 1, 2, 1, 2],
 [3, 2, 2, 0, 2, 0, 0, 0, 2],
 [2, 1, 2, 1, 0, 1, 2, 1, 0],
@@ -19,38 +25,50 @@ let newGrid = [[5, 0, 0, 0, 2, 3, 0, 0, 0],
 [2, 1, 2, 1, 0, 1, 0, 1, 0],
 [0, 0, 2, 0, 0, 2, 0, 0, 0]]
 
-let grid = newGrid
+let grid = grid1
 
-const player = new Player(ctx,grid,controls)
-const bomb = new Bomb(grid,arena)
+let player = new Player(ctx,grid,controls)
+let bomb = new Bomb(grid)
 
 arena.drawGrid(grid)
 arena.drawPlayer(0,0)
 
 function play(){
-
-    animate()
+    myReq = requestAnimationFrame(animate)
 }
 animate()
 
 function reset(){
-    cancelAnimationFrame(animate)
-    grid = newGrid
+    cancelAnimationFrame(myReq)
+    
+    grid = [[5, 0, 0, 0, 2, 3, 0, 0, 0],
+        [0, 1, 0, 1, 2, 1, 2, 1, 2],
+        [3, 2, 2, 0, 2, 0, 0, 0, 2],
+        [2, 1, 2, 1, 0, 1, 2, 1, 0],
+        [0, 0, 2, 0, 2, 2, 2, 2, 2],
+        [2, 1, 0, 1, 0, 1, 0, 1, 2],
+        [0, 2, 2, 0, 2, 2, 2, 2, 0],
+        [2, 1, 2, 1, 0, 1, 0, 1, 0],
+        [0, 0, 2, 0, 0, 2, 0, 0, 0]]
+    player = new Player(ctx,grid,controls)
+    bomb = new Bomb(grid,arena)
     arena.drawGrid(grid)
     arena.drawPlayer(0,0)
 }
 
+var sound = false
 function soundOn(){
-    bomb.dropBomb()
+    sound = true
 }
 
 function soundOff(){
-    setTimeout(bomb.explode(),50000)
+    sound = false
 }
 
 function animate(){
-    "let grid = arena.makeGrid()"
-    player.moving()
+    if (player.moving(sound)){
+        death()
+    }
     
-    requestAnimationFrame(animate)
+    myReq = requestAnimationFrame(animate)
 }

@@ -12,7 +12,6 @@ class Bomb{
         
         let spot2 = emptySpots[Math.floor(Math.random()
             *emptySpots.length)]
-        console.log(spot2,"Check spot 2")
         this.addBomb(spot2)
         
     }
@@ -33,6 +32,7 @@ class Bomb{
         this.grid[spot[0]][spot[1]]=3
     }
 
+    // TODO: add bomb range 
     explode(){
         let bombs = this.findBombs()
         for(let i=0;i<bombs.length;i++){
@@ -47,6 +47,9 @@ class Bomb{
                 if(this.grid[bombs[i][0]-1][bombs[i][1]] == 2){
                     this.grid[bombs[i][0]-1][bombs[i][1]] = 6
                 }
+                if(this.grid[bombs[i][0]-1][bombs[i][1]] == 5){
+                    return true
+                }
             }
             if(bombs[i][0]+1 != 9) {
                 if(this.grid[bombs[i][0]+1][bombs[i][1]] == 0){
@@ -57,6 +60,9 @@ class Bomb{
                 }
                 if(this.grid[bombs[i][0]+1][bombs[i][1]] == 2){
                     this.grid[bombs[i][0]+1][bombs[i][1]] = 6
+                }
+                if(this.grid[bombs[i][0]+1][bombs[i][1]] == 5){
+                    return true
                 }
             }  
             if(bombs[i][1]-1 != -1) {
@@ -69,6 +75,9 @@ class Bomb{
                 if(this.grid[bombs[i][0]][bombs[i][1]-1] == 2){
                     this.grid[bombs[i][0]][bombs[i][1]-1] = 6
                 }
+                if(this.grid[bombs[i][0]][bombs[i][1]-1] == 5){
+                    return true
+                }
             }
             if(bombs[i][1]+1 != 9) {
                 if(this.grid[bombs[i][0]][bombs[i][1]+1] == 0){
@@ -80,8 +89,13 @@ class Bomb{
                 if(this.grid[bombs[i][0]][bombs[i][1]+1] == 2){
                     this.grid[bombs[i][0]][bombs[i][1]+1] = 6
                 }
+                if(this.grid[bombs[i][0]][bombs[i][1]+1] == 5){
+                    return true
+                }
             }
         }
+
+        return false
     }
 
     findBombs(){
@@ -94,11 +108,6 @@ class Bomb{
                 }
             }
         }
-        console.log(bombs,"POMMIT")
         return bombs
-    }
-
-    checkIfValid(){
-
     }
 }
