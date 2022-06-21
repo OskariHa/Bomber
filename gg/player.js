@@ -1,8 +1,9 @@
 class Player{
-    constructor(ctx,grid,gridSize){
+    constructor(ctx,grid,gridSize,ai){
         this.ctx = ctx
         this.grid = grid
         this.gridSize =gridSize
+        this.ai = ai
         this.controls = new Controls()
         this.hasBomb = false
         this.droppingBomb = false
@@ -131,6 +132,7 @@ class Player{
     #drawMovement(state,oldPosition,newPosition){
         arena.drawGrid(this.grid)
 
+        this.ai.moving()
         if (this.hasBomb){
             arena.drawPlayerBomb(newPosition[0],newPosition[1])
         }else{
