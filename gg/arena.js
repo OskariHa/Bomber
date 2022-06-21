@@ -43,6 +43,14 @@ class Arena{
                         x*(this.tileSize +this.spacing), 
                         y*(this.tileSize +this.spacing))
                 }
+                if(grid[x][y]==7){
+                    this.drawTile(
+                        x*(this.tileSize +this.spacing), 
+                        y*(this.tileSize +this.spacing))
+                    this.drawAi(
+                        x*(this.tileSize +this.spacing), 
+                        y*(this.tileSize +this.spacing))
+                }
             }
         }
     }
@@ -107,6 +115,12 @@ class Arena{
         this.ctx.fillText("🧑", 
             x*this.tileFix+(this.tileSize/2)-12, 
             y*this.tileFix+(this.tileSize/2)+5)
+    }
+
+    drawAi(x,y){ 
+        this.ctx.beginPath()
+        this.ctx.font = '20px serif'
+        this.ctx.fillText("🤖",x+14,y+35)
     }
     drawPlayerBomb(x,y){ 
         this.ctx.beginPath()
